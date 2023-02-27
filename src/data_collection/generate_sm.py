@@ -8,11 +8,11 @@ import cv2
 from PIL import Image
 
 from xpc3 import *
-from xpc3_helper import *
+from xpc3_helper_sm import *
 
 import tqdm
 
-OUTDIR = '/scratch/smkatz/class/CS231A/KMWHData/'
+OUTDIR = '/scratch/smkatz/class/CS231A/E16Data/'
 
 # 0=Clear, 1=Cirrus, 2=Scattered, 3=Broken, 4=Overcast (higher numbers are cloudier/darker)
 CLOUD_TYPE = 2
@@ -23,10 +23,10 @@ NUM_POINTS_CTE = 40
 NUM_POINTS_DTP = 250
 
 # From ground truth
-left_edge_1 = [-23954.87792969, 225.3943862, 32806.69628906]
-left_edge_2 = [-24449.80410156, 224.0555954, 33161.92558594]
-right_edge_1 = [-23937.09082031, 225.32855225, 32831.61230469]
-right_edge_2 = [-24432.01777344, 223.98096924, 33186.75800781]
+left_edge_1 = [35929.9796875, -190.48041382, 46803.98203125]
+left_edge_2 = [35753.2046875, -185.55480957, 46404.71953125]
+right_edge_1 = [35950.821875, -190.52763977, 46794.65]
+right_edge_2 = [35773.7703125, - 185.58735657, 46395.5515625]
 
 def get_image_coord(pt, mv, proj, sh, sw):
     pt_h = np.append(np.array(pt), 1.0)
@@ -67,12 +67,12 @@ def generate_dataset(client, outdir, ncte, ndtp):
         fd.write("filename,crosstrack,heading,downtrack,leftx1,lefty1,leftx2,lefty2,rightx1,righty1,rightx2,righty2\n")
 
     # Generate random downtrack positions for data
-    dtps = [random.uniform(680, 780) for _ in range(ndtp)]
+    dtps = [random.uniform(250, 350) for _ in range(ndtp)]
     dtps.sort()
 
     idx = 0
     for dtp in tqdm.tqdm(dtps):
-        ctes = [random.uniform(-10, 10) for _ in range(ncte)]
+        ctes = [random.uniform(-7, 7) for _ in range(ncte)]
         for cte in ctes:
             he = random.uniform(-30, 30)
 
